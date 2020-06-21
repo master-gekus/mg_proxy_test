@@ -6,6 +6,7 @@
 #include <QMessageBox>
 
 #include "utils.h"
+#include "options_dialog.h"
 
 #define MAIN_WINDOW_GROUP QStringLiteral("Main Window")
 #define GEOMETRY_KEY QStringLiteral("Geometry")
@@ -31,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
   connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::close);
   connect(&idle_handler_, &IdleHandler::idle, this, &MainWindow::idle_update_ui);
 
+  urls_ = OptionsDialog::loadUrls();
+
   if (!QSslSocket::supportsSsl()) {
     QMetaObject::invokeMethod(this, [this](){
       QMessageBox::critical(this, windowTitle(),
@@ -54,4 +57,20 @@ void MainWindow::idle_update_ui()
 {
   ui->actionRemoveProxy->setEnabled(false);
   ui->actionCheckOne->setEnabled(false);
+}
+
+void MainWindow::on_actionOptions_triggered()
+{
+  OptionsDialog od{this};
+  od.setUrls(urls_);
+
+  if (QDialog::Accepted != od.exec()) {
+    return;
+  }
+
+  QList<QUrl> new_urls{od.urls()};
+  if (urls_ != new_urls) {
+    urls_  = new_urls;
+    OptionsDialog::saveUrls(urls_);
+  }
 }

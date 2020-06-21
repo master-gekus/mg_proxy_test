@@ -14,6 +14,9 @@ add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE
   idle_handler_p.h
   utils.cpp
   utils.h
+  options_dialog.cpp
+  options_dialog.h
+  options_dialog.ui
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
