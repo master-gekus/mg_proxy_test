@@ -9,6 +9,11 @@ add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE
   main_window.cpp
   main_window.h
   main_window.ui
+  idle_handler.cpp
+  idle_handler.h
+  idle_handler_p.h
+  utils.cpp
+  utils.h
 )
 
 set_target_properties(${PROJECT_NAME} PROPERTIES

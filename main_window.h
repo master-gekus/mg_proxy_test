@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "idle_handler.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -16,6 +18,12 @@ public:
   ~MainWindow();
 
 private:
+  void idle_update_ui();
+
+private:
   Ui::MainWindow *ui;
+
+private:
+  IdleHandler idle_handler_;
 };
 #endif // MAINWINDOW_H
