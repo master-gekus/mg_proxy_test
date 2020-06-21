@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 project(mg_proxy_test LANGUAGES CXX)
 
-find_package(Qt5 5.7 COMPONENTS Core Gui Widgets REQUIRED)
+find_package(Qt5 5.7 COMPONENTS Core Gui Widgets Network REQUIRED)
 
 add_executable(${PROJECT_NAME} WIN32 MACOSX_BUNDLE
   main.cpp
@@ -28,6 +28,7 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   Qt5::Core
   Qt5::Gui
   Qt5::Widgets
+  Qt5::Network
   )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

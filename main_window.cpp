@@ -2,6 +2,8 @@
 #include "./ui_main_window.h"
 
 #include <QSettings>
+#include <QSslSocket>
+#include <QMessageBox>
 
 #include "utils.h"
 
@@ -28,6 +30,13 @@ MainWindow::MainWindow(QWidget *parent)
 
   connect(ui->actionQuit, &QAction::triggered, this, &MainWindow::close);
   connect(&idle_handler_, &IdleHandler::idle, this, &MainWindow::idle_update_ui);
+
+  if (!QSslSocket::supportsSsl()) {
+    QMetaObject::invokeMethod(this, [this](){
+      QMessageBox::critical(this, windowTitle(),
+                            QStringLiteral("SSL support is not loaded, checking for HTTPS hosts will be disabled."));
+    }, Qt::QueuedConnection);
+  }
 }
 
 MainWindow::~MainWindow()
